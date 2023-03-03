@@ -1,0 +1,21 @@
+# VPC Layout
+
+## VPC
+
+### photobank-vpc-1
+
+IPv4 CIDR: 10.17.0.0/16
+First IP: 10.17.0.0
+Last IP: 10.17.255.255
+
+## Subnets
+
+### sn-photobank-app
+
+IPv4 CIDR: 10.17.0.0/17
+AZ: us-east-1a
+
+### sn-photobank-reserved
+
+IPv4 CIDR: 10.17.128.0/17
+AZ: us-east-1a
