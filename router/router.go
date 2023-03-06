@@ -15,8 +15,15 @@ func SetupRouter() *gin.Engine {
 	r := gin.Default()
 	r.MaxMultipartMemory = 8 << 20 // 8 MiB
 
+	authorized := r.Group("/admin", gin.BasicAuth(gin.Accounts{
+		"foo":    "bar",
+		"austin": "1234",
+		"lena":   "hello2",
+		"manu":   "4321",
+	}))
+
 	// Upload image
-	r.POST("/upload", func(c *gin.Context) {
+	authorized.POST("/upload", func(c *gin.Context) {
 		form, err := c.MultipartForm()
 		if err != nil {
 			c.String(http.StatusBadRequest, "get form err: %s", err.Error())
@@ -31,7 +38,7 @@ func SetupRouter() *gin.Engine {
 	})
 
 	// Download image by filename 
-	r.GET("/download/:filename", func(c *gin.Context) {
+	authorized.GET("/download/:filename", func(c *gin.Context) {
 		filename := c.Param("filename")
 		var begin, end int64 
 		var err error
